@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import SearchResults from './SearchResults'
+import Book from './Book'
 
 class Search extends Component {
   static propTypes = {
@@ -12,8 +13,8 @@ class Search extends Component {
 
   state = {
     query: '',
-    newBooks: [],
-    searchErr: false
+    searchErr: false,
+    searchResultBooks: []
   }
 
   getBooks = (event) => {
@@ -24,16 +25,35 @@ class Search extends Component {
     // if user input => run the search
     if (query) {
       BooksAPI.search(query, 20).then((books) => {
-        books.length > 0 ?  this.setState({newBooks: books, searchErr: false }) : this.setState({ newBooks: [], searchErr: true })
+        if(books.length > 0) {
+          let results = []
+          let oldBook = []
+
+          for(let i = 0; i < books.length; i++) {
+            for(let j = 0; j < this.props.books.length; j ++) {
+              if(this.props.books[j].id === books[i].id) {
+                oldBook = this.props.books[j]
+                results.push(oldBook)
+              }
+            }
+            if(oldBook.id !== books[i].id){
+              results.push(books[i])
+            }
+          }
+
+          this.setState({ searchErr: false, searchResultBooks: results })
+        } else {
+          this.setState({ searchErr: true, searchResultBooks: []})
+        }
       })
 
     // if query is empty => reset state to default
-    } else this.setState({newBooks: [], searchErr: false })
+    } else this.setState({ searchErr: false, searchResultBooks: [] })
   }
 
   render() {
 
-    const { query, newBooks, searchErr } = this.state
+    const { query, searchErr, searchResultBooks } = this.state
     const { books, changeShelf, book } = this.props
 
       return (
@@ -48,9 +68,9 @@ class Search extends Component {
             </div>
           </div>
           <div className="search-books-results">
-            { newBooks.length > 0 && (
+            { searchResultBooks.length > 0 && (
               <SearchResults 
-                books={newBooks}
+                books={searchResultBooks}
                 changeShelf={ changeShelf }
               />
             )}

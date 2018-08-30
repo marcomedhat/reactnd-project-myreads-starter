@@ -10,7 +10,20 @@ class ShelfChanger extends Component {
   }
 
   static defaultProps = {
-    options: ['currentlyReading', 'wantToRead', 'read', 'none']
+    options: [
+      {id: 'currentlyReading',
+        message: 'Currently Reading'
+      }, 
+      {id: 'wantToRead',
+        message: 'Want To Read'
+      }, 
+      {id: 'read',
+        message: 'Read'
+      }, 
+      {id: 'none',
+        message: 'None'
+      }
+    ]
   }
 
   render() {
@@ -28,18 +41,18 @@ class ShelfChanger extends Component {
     }
     
     let optionsChoice = this.props.options.map((option) => {
-      if(option === this.props.book.shelf) {
-        return <option key={option} value={option} className="selected">{option}</option>
+      if(option.id === this.props.book.shelf) {
+        return <option key={option.id} value={option.id} className="selected">{option.message}</option>
       } else if (!(this.props.book.shelf)) {
-        if(option === 'none') {
+        if(option.id === 'none') {
           return (
-            <option key='none' value="none" className="selected">None</option>
+            <option key={option.id} value={option.id} className="selected">{option.message}</option>
           )
         } else {
-            return <option key={option} value={option}>{option}</option>
+            return <option key={option.id} value={option.id}>{option.message}</option>
         }
       } else
-        return <option key={option} value={option}>{option}</option>
+        return <option key={option.id} value={option.id}>{option.message}</option>
     })
     
 
