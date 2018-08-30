@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-// import Book from './Book'
 import * as BooksAPI from './BooksAPI'
 import SearchResults from './SearchResults'
 
@@ -29,13 +28,13 @@ class Search extends Component {
       })
 
     // if query is empty => reset state to default
-  } else this.setState({newBooks: [], searchErr: false })
+    } else this.setState({newBooks: [], searchErr: false })
   }
 
   render() {
 
     const { query, newBooks, searchErr } = this.state
-    const { books, changeShelf } = this.props
+    const { books, changeShelf, book } = this.props
 
       return (
         <div className="search-books">

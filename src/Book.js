@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types'
 import ShelfChanger from './ShelfChanger'
-import noCover from './icons/no-cover-image.png'
 
 class Book extends Component {
 
@@ -15,7 +14,7 @@ class Book extends Component {
     const { book, books, changeShelf, options } = this.props
 
     // add fallbacks for missing cover images and title
-    const coverImg = book.imageLinks && book.imageLinks.thumbnail ? book.imageLinks.thumbnail : noCover
+    const coverImg = book.imageLinks.thumbnail
     const title = book.title ? book.title : "No title available"
 
     return (
@@ -24,7 +23,7 @@ class Book extends Component {
               <div className="book-top">
                 <div
                   className="book-cover"
-                  style={{ backgroundImage: `url(${coverImg})`}}>
+                  style={{ width: 128, height: 193, backgroundImage: `url(${coverImg})`}}>
                 </div>
                 <ShelfChanger
                   book={ book }

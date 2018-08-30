@@ -13,21 +13,21 @@ class SearchResults extends Component {
 		const { books, changeShelf } = this.props
 
 		return (
-              <div>
-                <div className=''>
-                  <h3>Search returned { books.length } books </h3>
-                </div>
-                <ol className="books-grid">
-                  {books.map((book) => (
-                    <Book
-                      book={ book }
-                      books={ books }
-                      key={ book.id }
-                      changeShelf={ changeShelf }
-                    />
-                  ))}
-                </ol>
-              </div>
+      <div>
+        <div className=''>
+          <h3>Search returned { books.length } books </h3>
+        </div>
+        <ol className="books-grid">
+          {books.map((book) => (
+            <Book
+              book={ book }
+              books={ books }
+              key={ book.id }
+              changeShelf={ changeShelf }
+            />
+          ))}
+        </ol>
+      </div>
 		)
 	}
 }
