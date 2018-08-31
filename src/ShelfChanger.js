@@ -27,7 +27,7 @@ class ShelfChanger extends Component {
   }
 
   render() {
-    const { book, books, changeShelf, options } = this.props
+    const { book, books, changeShelf } = this.props
 
     // set current shelf to none as default
     let currentShelf = 'none'
