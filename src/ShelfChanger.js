@@ -42,11 +42,11 @@ class ShelfChanger extends Component {
     
     let optionsChoice = this.props.options.map((option) => {
       if(option.id === this.props.book.shelf) {
-        return <option key={option.id} value={option.id} className="selected">{option.message}</option>
+        return <option key={option.id} value={option.id} className="selected">&#10004; {option.message}</option>
       } else if (!(this.props.book.shelf)) {
         if(option.id === 'none') {
           return (
-            <option key={option.id} value={option.id} className="selected">{option.message}</option>
+            <option key={option.id} value={option.id} className="selected">&#10004; {option.message}</option>
           )
         } else {
             return <option key={option.id} value={option.id}>{option.message}</option>

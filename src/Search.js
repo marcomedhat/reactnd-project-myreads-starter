@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import SearchResults from './SearchResults'
-import Book from './Book'
 
 class Search extends Component {
   static propTypes = {
@@ -13,8 +12,8 @@ class Search extends Component {
 
   state = {
     query: '',
-    searchErr: false,
-    searchResultBooks: []
+    newBooks: [],
+    searchErr: false
   }
 
   getBooks = (event) => {
@@ -26,35 +25,28 @@ class Search extends Component {
     if (query) {
       BooksAPI.search(query, 20).then((books) => {
         if(books.length > 0) {
-          let results = []
-          let oldBook = []
-
           for(let i = 0; i < books.length; i++) {
             for(let j = 0; j < this.props.books.length; j ++) {
               if(this.props.books[j].id === books[i].id) {
-                oldBook = this.props.books[j]
-                results.push(oldBook)
+                books.splice(books.indexOf(books[i]), 1)
+                books.push(this.props.books[j])
               }
-            }
-            if(oldBook.id !== books[i].id){
-              results.push(books[i])
             }
           }
 
-          this.setState({ searchErr: false, searchResultBooks: results })
+          this.setState({ searchErr: false, newBooks: books })
         } else {
-          this.setState({ searchErr: true, searchResultBooks: []})
+          this.setState({ searchErr: true, newBooks: []})
         }
       })
-
     // if query is empty => reset state to default
-    } else this.setState({ searchErr: false, searchResultBooks: [] })
+    } else this.setState({newBooks: [], searchErr: false })
   }
 
   render() {
 
-    const { query, searchErr, searchResultBooks } = this.state
-    const { books, changeShelf, book } = this.props
+    const { query, newBooks, searchErr } = this.state
+    const { books, changeShelf } = this.props
 
       return (
         <div className="search-books">
@@ -68,9 +60,9 @@ class Search extends Component {
             </div>
           </div>
           <div className="search-books-results">
-            { searchResultBooks.length > 0 && (
+            { newBooks.length > 0 && (
               <SearchResults 
-                books={searchResultBooks}
+                books={newBooks}
                 changeShelf={ changeShelf }
               />
             )}

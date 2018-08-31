@@ -4,15 +4,15 @@ import Book from './Book'
 import * as BooksAPI from './BooksAPI'
 
 class SearchResults extends Component {
-	static propTypes = {
-	    books: PropTypes.array.isRequired,
-	    changeShelf: PropTypes.func.isRequired
-	  }
+  static propTypes = {
+      books: PropTypes.array.isRequired,
+      changeShelf: PropTypes.func.isRequired
+    }
 
-	render() {
-		const { books, changeShelf } = this.props
+  render() {
+    const { books, changeShelf } = this.props
 
-		return (
+    return (
       <div>
         <div className=''>
           <h3>Search returned { books.length } books </h3>
@@ -28,8 +28,8 @@ class SearchResults extends Component {
           ))}
         </ol>
       </div>
-		)
-	}
+    )
+  }
 }
 
 export default SearchResults
